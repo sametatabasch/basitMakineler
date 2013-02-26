@@ -1,5 +1,5 @@
 ﻿fscommand("allowscale", "false");//Birden fazla fscommand yazınca  sadece son yazılanı  çalıştırıyor
-import flash.events.MouseEvent;//hizliMenu için 
+import flash.events.MouseEvent;
 ileri.addEventListener(MouseEvent.CLICK,icerikGetirIleri);
 geri.addEventListener(MouseEvent.CLICK,icerikGetirGeri);
 var icerikNo:uint = 0;
@@ -82,7 +82,7 @@ function menuAcKapat(e:MouseEvent)
 {
 	if (hizliMenu.yukariAsagiButon.currentFrame == 1)
 	{
-		menuAcKapatZamanlayıci = setInterval(menuAc,0)
+		menuAcKapatZamanlayıci = setInterval(menuAc,0);
 	}
 	else if (hizliMenu.yukariAsagiButon.currentFrame==5)
 	{
@@ -90,7 +90,7 @@ function menuAcKapat(e:MouseEvent)
 	}
 }
 
-var menuAcKapatZamanlayıci
+var menuAcKapatZamanlayıci;
 function baslaKapatMousesiz()
 {
 	menuAcKapatZamanlayıci = setInterval(menuKapat,0);
@@ -117,50 +117,159 @@ function menuKapat():void
 hizliMenu.vida.addEventListener(MouseEvent.CLICK,icerikGetir1);
 function icerikGetir1(e:MouseEvent)
 {
-	MovieClip(root).icerikGetir("SWF/1.swf");
+	icerikGetir("SWF/1.swf");
 	baslaKapatMousesiz();
-	MovieClip(root).icerikNo = 1;
+	icerikNo = 1;
 }
 hizliMenu.cark.addEventListener(MouseEvent.CLICK,icerikGetir2);
 function icerikGetir2(e:MouseEvent)
 {
-	MovieClip(root).icerikGetir("SWF/2.swf");
+	icerikGetir("SWF/2.swf");
 	baslaKapatMousesiz();
-	MovieClip(root).icerikNo = 2;
+	icerikNo = 2;
 }
 hizliMenu.cikrik.addEventListener(MouseEvent.CLICK,icerikGetir3);
 function icerikGetir3(e:MouseEvent)
 {
-	MovieClip(root).icerikGetir("SWF/3.swf");
+	icerikGetir("SWF/3.swf");
 	baslaKapatMousesiz();
-	MovieClip(root).icerikNo = 3;
+	icerikNo = 3;
 }
 hizliMenu.tekerlek.addEventListener(MouseEvent.CLICK,icerikGetir4);
 function icerikGetir4(e:MouseEvent)
 {
-	MovieClip(root).icerikGetir("SWF/4.swf");
+	icerikGetir("SWF/4.swf");
 	baslaKapatMousesiz();
-	MovieClip(root).icerikNo = 4;
+	icerikNo = 4;
 }
 hizliMenu.kaldirac.addEventListener(MouseEvent.CLICK,icerikGetir5);
 function icerikGetir5(e:MouseEvent)
 {
-	MovieClip(root).icerikGetir("SWF/5.swf");
+	icerikGetir("SWF/5.swf");
 	baslaKapatMousesiz();
-	MovieClip(root).icerikNo = 5;
+	icerikNo = 5;
 }
 hizliMenu.egikduzlem.addEventListener(MouseEvent.CLICK,icerikGetir6);
 function icerikGetir6(e:MouseEvent)
 {
-	MovieClip(root).icerikGetir("SWF/6.swf");
+	icerikGetir("SWF/6.swf");
 	baslaKapatMousesiz();
-	MovieClip(root).icerikNo = 6;
+	icerikNo = 6;
 }
 hizliMenu.makara.addEventListener(MouseEvent.CLICK,icerikGetir7);
 function icerikGetir7(e:MouseEvent)
 {
-	MovieClip(root).icerikGetir("SWF/7.swf");
+	icerikGetir("SWF/7.swf");
 	baslaKapatMousesiz();
-	MovieClip(root).icerikNo = 7;
+	icerikNo = 7;
+}
+/////////////////////////////////////////////////
+
+/////////////////////////////////////////////////
+//////////////////kapat butonu///////////////////
+/////////////////////////////////////////////////
+kapat.addEventListener(MouseEvent.CLICK,kapatsinmi);
+function kapatsinmi(e:MouseEvent)
+{
+	kapat.gotoAndStop(2);
+	kapat.evetButon.addEventListener(MouseEvent.MOUSE_DOWN,function (){fscommand("quit");});
+	kapat.hayirButon.addEventListener(MouseEvent.MOUSE_DOWN,function (){kapat.gotoAndStop(1);});
+}
+/////////////////////////////////////////////////;
+
+/////////////////////////////////////////////////;
+////////////////////yanMenu//////////////////////
+/////////////////////////////////////////////////
+var menuAcZamanlayıci,menuKapatZamanlayıci;
+yanMenu.acKapatButon.addEventListener(MouseEvent.CLICK,yanMenuAcKapat);
+/**
+ * yanMenuAcKapat fonksiyonu
+ * yan menü  açıksa kapatır kapalıysa açar
+ *
+ */
+function yanMenuAcKapat(e:MouseEvent)
+{
+	if (yanMenu.acKapatButon.currentFrame == 1)
+	{
+		menuAcZamanlayıci = setInterval(yanMenuAc,1);
+	}
+	else if (yanMenu.acKapatButon.currentFrame==5)
+	{
+		menuKapatZamanlayıci = setInterval(yanMenuKapat,1);
+	}
+}
+/**
+ * yanMunuAc fonksiyonu
+ * yan menünün açılmasını sağlıyor
+ *
+ */
+function yanMenuAc():void
+{
+	yanMenu.x +=  5;
+	if (yanMenu.x>=100)
+	{
+		clearInterval(menuAcZamanlayıci);
+	}
+	yanMenu.acKapatButon.gotoAndStop(5);
+}
+/**
+ * yanMunuKapat fonksiyonu
+ * yan menünün kapanmasını sağlıyor
+ *
+ */
+function yanMenuKapat():void
+{
+	yanMenu.x -=  5;
+	if (yanMenu.x<=0)
+	{
+		clearInterval(menuKapatZamanlayıci);
+	}
+	yanMenu.acKapatButon.gotoAndStop(1);
+}
+/////////////////////////////////////////////////
+
+/////////////////////////////////////////////////
+//////////////Yan menü  Butonlar/////////////////
+/////////////////////////////////////////////////
+
+//anasayfa
+yanMenu.anaSayfa.addEventListener(MouseEvent.CLICK,anaSayfaButonFonksiyon);
+yanMenu.anaSayfa.addEventListener(MouseEvent.MOUSE_OVER,function(){yanMenu.anaSayfa.gotoAndStop(2)});
+yanMenu.anaSayfa.addEventListener(MouseEvent.MOUSE_OUT,function(){yanMenu.anaSayfa.gotoAndStop(1)});
+function anaSayfaButonFonksiyon (e:MouseEvent) {
+	icerikGetir("SWF/anasayfa.swf");
+	menuKapatZamanlayıci = setInterval(yanMenuKapat,1);
+}
+//oyun
+yanMenu.oyun.addEventListener(MouseEvent.CLICK,oyunButonFonksiyon);
+yanMenu.oyun.addEventListener(MouseEvent.MOUSE_OVER,function(){yanMenu.oyun.gotoAndStop(2)});
+yanMenu.oyun.addEventListener(MouseEvent.MOUSE_OUT,function(){yanMenu.oyun.gotoAndStop(1)});
+function oyunButonFonksiyon(e:MouseEvent) {
+	icerikGetir("SWF/oyun.swf");
+	menuKapatZamanlayıci = setInterval(yanMenuKapat,1);
+}
+//sozluk
+yanMenu.sozluk.addEventListener(MouseEvent.CLICK,sozlukButonFonksiyon);
+yanMenu.sozluk.addEventListener(MouseEvent.MOUSE_OVER,function(){yanMenu.sozluk.gotoAndStop(2)});
+yanMenu.sozluk.addEventListener(MouseEvent.MOUSE_OUT,function(){yanMenu.sozluk.gotoAndStop(1)});
+function sozlukButonFonksiyon(e:MouseEvent) {
+	icerikGetir("SWF/sozluk.swf");
+	menuKapatZamanlayıci = setInterval(yanMenuKapat,1);
+}
+//sinav
+yanMenu.sinav.addEventListener(MouseEvent.CLICK,sinavButonFonksiyon);
+yanMenu.sinav.addEventListener(MouseEvent.MOUSE_OVER,function(){yanMenu.sinav.gotoAndStop(2)});
+yanMenu.sinav.addEventListener(MouseEvent.MOUSE_OUT,function(){yanMenu.sinav.gotoAndStop(1)});
+function sinavButonFonksiyon(e:MouseEvent) {
+	icerikGetir("SWF/sinav.swf");
+	menuKapatZamanlayıci = setInterval(yanMenuKapat,1);
+}
+//konular
+yanMenu.konular.addEventListener(MouseEvent.CLICK,konularButonFonksiyon);
+yanMenu.konular.addEventListener(MouseEvent.MOUSE_OVER,function(){yanMenu.konular.gotoAndStop(2)});
+yanMenu.konular.addEventListener(MouseEvent.MOUSE_OUT,function(){yanMenu.konular.gotoAndStop(1)});
+function konularButonFonksiyon(e:MouseEvent) {
+	icerikGetir("SWF/konular.swf");
+	menuKapatZamanlayıci = setInterval(yanMenuKapat,1);
 }
 /////////////////////////////////////////////////
