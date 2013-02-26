@@ -82,25 +82,25 @@ function menuAcKapat(e:MouseEvent)
 {
 	if (hizliMenu.yukariAsagiButon.currentFrame == 1)
 	{
-		menuAcKapatZamanlayıci = setInterval(menuAc,0);
+		menuAcKapatZamanlayici = setInterval(menuAc,0);
 	}
 	else if (hizliMenu.yukariAsagiButon.currentFrame==5)
 	{
-		menuAcKapatZamanlayıci = setInterval(menuKapat,0);
+		menuAcKapatZamanlayici = setInterval(menuKapat,0);
 	}
 }
 
-var menuAcKapatZamanlayıci;
+var menuAcKapatZamanlayici;
 function baslaKapatMousesiz()
 {
-	menuAcKapatZamanlayıci = setInterval(menuKapat,0);
+	menuAcKapatZamanlayici = setInterval(menuKapat,0);
 }
 function menuAc():void
 {
 	hizliMenu.maske.height +=  5;
 	if (hizliMenu.maske.height >= 370)
 	{
-		clearInterval(menuAcKapatZamanlayıci);
+		clearInterval(menuAcKapatZamanlayici);
 	}
 	hizliMenu.yukariAsagiButon.gotoAndStop(5);
 }
@@ -109,7 +109,7 @@ function menuKapat():void
 	hizliMenu.maske.height -=  5;
 	if (hizliMenu.maske.height <= 1)
 	{
-		clearInterval(menuAcKapatZamanlayıci);
+		clearInterval(menuAcKapatZamanlayici);
 	}
 	hizliMenu.yukariAsagiButon.gotoAndStop(1);
 }
@@ -180,7 +180,7 @@ function kapatsinmi(e:MouseEvent)
 /////////////////////////////////////////////////;
 ////////////////////yanMenu//////////////////////
 /////////////////////////////////////////////////
-var menuAcZamanlayıci,menuKapatZamanlayıci;
+var menuAcZamanlayici,menuKapatZamanlayici;
 yanMenu.acKapatButon.addEventListener(MouseEvent.CLICK,yanMenuAcKapat);
 /**
  * yanMenuAcKapat fonksiyonu
@@ -191,11 +191,11 @@ function yanMenuAcKapat(e:MouseEvent)
 {
 	if (yanMenu.acKapatButon.currentFrame == 1)
 	{
-		menuAcZamanlayıci = setInterval(yanMenuAc,1);
+		menuAcZamanlayici = setInterval(yanMenuAc,1);
 	}
 	else if (yanMenu.acKapatButon.currentFrame==5)
 	{
-		menuKapatZamanlayıci = setInterval(yanMenuKapat,1);
+		menuKapatZamanlayici = setInterval(yanMenuKapat,1);
 	}
 }
 /**
@@ -208,7 +208,7 @@ function yanMenuAc():void
 	yanMenu.x +=  5;
 	if (yanMenu.x>=100)
 	{
-		clearInterval(menuAcZamanlayıci);
+		clearInterval(menuAcZamanlayici);
 	}
 	yanMenu.acKapatButon.gotoAndStop(5);
 }
@@ -222,7 +222,7 @@ function yanMenuKapat():void
 	yanMenu.x -=  5;
 	if (yanMenu.x<=0)
 	{
-		clearInterval(menuKapatZamanlayıci);
+		clearInterval(menuKapatZamanlayici);
 	}
 	yanMenu.acKapatButon.gotoAndStop(1);
 }
@@ -238,7 +238,7 @@ yanMenu.anaSayfa.addEventListener(MouseEvent.MOUSE_OVER,function(){yanMenu.anaSa
 yanMenu.anaSayfa.addEventListener(MouseEvent.MOUSE_OUT,function(){yanMenu.anaSayfa.gotoAndStop(1)});
 function anaSayfaButonFonksiyon (e:MouseEvent) {
 	icerikGetir("SWF/anasayfa.swf");
-	menuKapatZamanlayıci = setInterval(yanMenuKapat,1);
+	menuKapatZamanlayici = setInterval(yanMenuKapat,1);
 }
 //oyun
 yanMenu.oyun.addEventListener(MouseEvent.CLICK,oyunButonFonksiyon);
@@ -246,7 +246,7 @@ yanMenu.oyun.addEventListener(MouseEvent.MOUSE_OVER,function(){yanMenu.oyun.goto
 yanMenu.oyun.addEventListener(MouseEvent.MOUSE_OUT,function(){yanMenu.oyun.gotoAndStop(1)});
 function oyunButonFonksiyon(e:MouseEvent) {
 	icerikGetir("SWF/oyun.swf");
-	menuKapatZamanlayıci = setInterval(yanMenuKapat,1);
+	menuKapatZamanlayici = setInterval(yanMenuKapat,1);
 }
 //sozluk
 yanMenu.sozluk.addEventListener(MouseEvent.CLICK,sozlukButonFonksiyon);
@@ -254,7 +254,7 @@ yanMenu.sozluk.addEventListener(MouseEvent.MOUSE_OVER,function(){yanMenu.sozluk.
 yanMenu.sozluk.addEventListener(MouseEvent.MOUSE_OUT,function(){yanMenu.sozluk.gotoAndStop(1)});
 function sozlukButonFonksiyon(e:MouseEvent) {
 	icerikGetir("SWF/sozluk.swf");
-	menuKapatZamanlayıci = setInterval(yanMenuKapat,1);
+	menuKapatZamanlayici = setInterval(yanMenuKapat,1);
 }
 //sinav
 yanMenu.sinav.addEventListener(MouseEvent.CLICK,sinavButonFonksiyon);
@@ -262,7 +262,7 @@ yanMenu.sinav.addEventListener(MouseEvent.MOUSE_OVER,function(){yanMenu.sinav.go
 yanMenu.sinav.addEventListener(MouseEvent.MOUSE_OUT,function(){yanMenu.sinav.gotoAndStop(1)});
 function sinavButonFonksiyon(e:MouseEvent) {
 	icerikGetir("SWF/sinav.swf");
-	menuKapatZamanlayıci = setInterval(yanMenuKapat,1);
+	menuKapatZamanlayici = setInterval(yanMenuKapat,1);
 }
 //konular
 yanMenu.konular.addEventListener(MouseEvent.CLICK,konularButonFonksiyon);
@@ -270,6 +270,6 @@ yanMenu.konular.addEventListener(MouseEvent.MOUSE_OVER,function(){yanMenu.konula
 yanMenu.konular.addEventListener(MouseEvent.MOUSE_OUT,function(){yanMenu.konular.gotoAndStop(1)});
 function konularButonFonksiyon(e:MouseEvent) {
 	icerikGetir("SWF/konular.swf");
-	menuKapatZamanlayıci = setInterval(yanMenuKapat,1);
+	menuKapatZamanlayici = setInterval(yanMenuKapat,1);
 }
 /////////////////////////////////////////////////
