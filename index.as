@@ -14,6 +14,11 @@ var tekerlekVeKasnakIcerik:tekerlekVeKasnak = new tekerlekVeKasnak  ;
 var vidalarIcerik:vidalar = new vidalar  ;
 var konularIcerik:konular = new konular  ;
 //var sinavIcerik:sinav= new sinav;
+/**
+ * eskiicerik temizleme fonksiyonunda kullanılacak. icerikNo arttırılmadan yada değiştirilmeden hemen önce bir önceki etkin iceriği tutacak
+ *
+ */
+var eskiIcerik;
 ileri.addEventListener(MouseEvent.CLICK,icerikGetirIleri);
 geri.addEventListener(MouseEvent.CLICK,icerikGetirGeri);
 var icerikNo:int = 0;
@@ -80,6 +85,10 @@ function temizle()
 	icerik.removeChild(etkinIcerik());
 	icerikNo++;
 	}*/
+	if(icerikNo!=0){
+	eskiIcerik.parent.removeChild(eskiIcerik);
+	
+	}
 }
 /**
  * icerikGetir fonksiyonu
@@ -100,7 +109,7 @@ function icerikGetir()
  */
 function icerikGetirIleri(e:MouseEvent)
 {
-	icerikNo++;
+	eskiIcerik=etkinIcerik(); icerikNo++;
 	/*if ile son belirlenmeli */
 	if (icerikNo<7)
 	{
@@ -114,7 +123,7 @@ function icerikGetirIleri(e:MouseEvent)
  */
 function icerikGetirGeri(e:MouseEvent)
 {
-	icerikNo--;
+	eskiIcerik=etkinIcerik(); icerikNo--;
 	/*if ile son belirlenmeli */
 	if (icerikNo<0)
 	{
@@ -172,13 +181,13 @@ function menuKapat():void
 	hizliMenu.yukariAsagiButon.gotoAndStop(1);
 }
 
-hizliMenu.vida.addEventListener(MouseEvent.CLICK,function(){icerikNo=1;icerikGetir();baslaKapatMousesiz();});
-hizliMenu.cark.addEventListener(MouseEvent.CLICK,function(){icerikNo=2;icerikGetir();baslaKapatMousesiz();});
-hizliMenu.cikrik.addEventListener(MouseEvent.CLICK,function(){icerikNo=3;icerikGetir();baslaKapatMousesiz();});
-hizliMenu.tekerlek.addEventListener(MouseEvent.CLICK,function(){icerikNo=4;icerikGetir();baslaKapatMousesiz();});
-hizliMenu.kaldirac.addEventListener(MouseEvent.CLICK,function(){icerikNo=5;icerikGetir();baslaKapatMousesiz();});
-hizliMenu.egikduzlem.addEventListener(MouseEvent.CLICK,function(){icerikNo=6;icerikGetir();baslaKapatMousesiz();});
-hizliMenu.makara.addEventListener(MouseEvent.CLICK,function(){icerikNo=7;icerikGetir();baslaKapatMousesiz();});
+hizliMenu.vida.addEventListener(MouseEvent.CLICK,function(){eskiIcerik=etkinIcerik(); icerikNo=1;icerikGetir();baslaKapatMousesiz();});
+hizliMenu.cark.addEventListener(MouseEvent.CLICK,function(){eskiIcerik=etkinIcerik(); icerikNo=2;icerikGetir();baslaKapatMousesiz();});
+hizliMenu.cikrik.addEventListener(MouseEvent.CLICK,function(){eskiIcerik=etkinIcerik(); icerikNo=3;icerikGetir();baslaKapatMousesiz();});
+hizliMenu.tekerlek.addEventListener(MouseEvent.CLICK,function(){eskiIcerik=etkinIcerik(); icerikNo=4;icerikGetir();baslaKapatMousesiz();});
+hizliMenu.kaldirac.addEventListener(MouseEvent.CLICK,function(){eskiIcerik=etkinIcerik(); icerikNo=5;icerikGetir();baslaKapatMousesiz();});
+hizliMenu.egikduzlem.addEventListener(MouseEvent.CLICK,function(){eskiIcerik=etkinIcerik(); icerikNo=6;icerikGetir();baslaKapatMousesiz();});
+hizliMenu.makara.addEventListener(MouseEvent.CLICK,function(){eskiIcerik=etkinIcerik(); icerikNo=7;icerikGetir();baslaKapatMousesiz();});
 /////////////////////////////////////////////////
 
 /////////////////////////////////////////////////
@@ -254,7 +263,7 @@ yanMenu.anaSayfaButon.addEventListener(MouseEvent.MOUSE_OVER,function(){yanMenu.
 yanMenu.anaSayfaButon.addEventListener(MouseEvent.MOUSE_OUT,function(){yanMenu.anaSayfaButon.gotoAndStop(1)});
 function anaSayfaButonFonksiyon(e:MouseEvent)
 {
-	icerikNo=0;
+	eskiIcerik=etkinIcerik(); icerikNo=0;
 	icerikGetir();
 	menuKapatZamanlayici = setInterval(yanMenuKapat,1);
 }
@@ -273,7 +282,7 @@ yanMenu.sozluk.addEventListener(MouseEvent.MOUSE_OVER,function(){yanMenu.sozluk.
 yanMenu.sozluk.addEventListener(MouseEvent.MOUSE_OUT,function(){yanMenu.sozluk.gotoAndStop(1)});
 function sozlukButonFonksiyon(e:MouseEvent)
 {
-	icerikNo=11;
+	eskiIcerik=etkinIcerik(); icerikNo=11;
 	icerikGetir();
 	menuKapatZamanlayici = setInterval(yanMenuKapat,1);
 }
@@ -292,7 +301,7 @@ yanMenu.konular.addEventListener(MouseEvent.MOUSE_OVER,function(){yanMenu.konula
 yanMenu.konular.addEventListener(MouseEvent.MOUSE_OUT,function(){yanMenu.konular.gotoAndStop(1)});
 function konularButonFonksiyon(e:MouseEvent)
 {
-	icerikNo=8;
+	eskiIcerik=etkinIcerik(); icerikNo=8;
 	icerikGetir();
 	menuKapatZamanlayici = setInterval(yanMenuKapat,1);
 }
