@@ -1,9 +1,73 @@
 ﻿fscommand("allowscale", "false");//Birden fazla fscommand yazınca  sadece son yazılanı  çalıştırıyor
 import flash.events.MouseEvent;
+import flash.utils.Timer;
+import flash.events.Event;
+var anaSayfaIcerik:anaSayfa = new anaSayfa  ;
+var carklarIcerik:carklar = new carklar  ;
+var cikriklarIcerik:cikriklar = new cikriklar  ;
+var egikDuzlemlerIcerik:egikDuzlemler = new egikDuzlemler  ;
+var kaldiraclarIcerik:kaldiraclar = new kaldiraclar  ;
+var makaralarIcerik:makaralar = new makaralar  ;
+////var oyunIcerik:oyun=new oyun;
+var sozlukIcerik:sozluk = new sozluk  ;
+var tekerlekVeKasnakIcerik:tekerlekVeKasnak = new tekerlekVeKasnak  ;
+var vidalarIcerik:vidalar = new vidalar  ;
+var konularIcerik:konular = new konular  ;
+//var sinavIcerik:sinav= new sinav;
 ileri.addEventListener(MouseEvent.CLICK,icerikGetirIleri);
 geri.addEventListener(MouseEvent.CLICK,icerikGetirGeri);
-var icerikNo:uint = 0;
+var icerikNo:int = 0;
+/**
+ * etkinIcerik fonksiyonu 
+ * icerik no ya göre aktif olan içerik nesnesini döndürür
+ * @return object
+ */
+function etkinIcerik()
+{
+	switch (icerikNo)
+	{
+		case 0 :
+			return anaSayfaIcerik;
+			break;
+		case 1 :
+			return vidalarIcerik;
+			break;
+		case 2 :
+			return carklarIcerik;
+			break;
+		case 3 :
+			return cikriklarIcerik;
+			break;
+		case 4 :
+			return tekerlekVeKasnakIcerik;
+			break;
+		case 5 :
+			return kaldiraclarIcerik;
+			break;
+		case 6 :
+			return egikDuzlemlerIcerik;
+			break;
+		case 7 :
+			return makaralarIcerik;
+			break;
+		case 8 :
+			return konularIcerik;
+			break;
+		/*case 9 :
+			return oyunIcerik;
+			break;
+		case 10 :
+			return sinavIcerik;
+			break;*/
+		case 11 :
+			return sozlukIcerik;
+			break;
+		default :
+			return anaSayfaIcerik;
+			break;
 
+	}
+}
 /**
  * temizle fonksiyonu
  * icerik nesnesine(sayfa gövdesini oluşturan nesne) boş bir swf çekerek sayfayı temizliyor
@@ -11,23 +75,23 @@ var icerikNo:uint = 0;
  */
 function temizle()
 {
-	var yukleIcerik:Loader = new Loader();
-	var temizle:URLRequest = new URLRequest("SWF/0.swf");
-	yukleIcerik.load(temizle);
-	icerik.addChild(yukleIcerik);
+	/*if(icerikNo>=1){//içerik no yu  azaltınca olmayan içeriğe denk gelmiş oluyor 
+	icerikNo--;
+	icerik.removeChild(etkinIcerik());
+	icerikNo++;
+	}*/
 }
 /**
  * icerikGetir fonksiyonu
  * parametre ile belirtilen swf dosyasını icerik nesnesine yüklüyor.
  * @param swf string
  */
-function icerikGetir(swf:String)
+function icerikGetir()
 {
 	temizle();
-	var yukleIcerik:Loader = new Loader();
-	var Swf:URLRequest = new URLRequest(swf);
-	yukleIcerik.load(Swf);
-	icerik.addChild(yukleIcerik);
+	icerik.addChild(etkinIcerik());
+	etkinIcerik().x = icerik.width / 2;
+	etkinIcerik().y = icerik.height / 2;
 }
 /**
  * icerikGetirIleri fonksiyonu
@@ -40,11 +104,7 @@ function icerikGetirIleri(e:MouseEvent)
 	/*if ile son belirlenmeli */
 	if (icerikNo<7)
 	{
-		temizle();
-		var yukleIcerik:Loader = new Loader();
-		var Swf:URLRequest = new URLRequest("SWF/"+ icerikNo +".swf");
-		yukleIcerik.load(Swf);
-		icerik.addChild(yukleIcerik);
+		icerikGetir()
 	}
 }
 /**
@@ -56,22 +116,20 @@ function icerikGetirGeri(e:MouseEvent)
 {
 	icerikNo--;
 	/*if ile son belirlenmeli */
-	if (icerikNo<1)
+	if (icerikNo<0)
 	{
-		temizle();
-		var yukleIcerik:Loader = new Loader();
-		var Swf:URLRequest = new URLRequest("SWF/"+ icerikNo +".swf");
-		yukleIcerik.load(Swf);
-		icerik.addChild(yukleIcerik);
+		icerikNo=0;
 	}
+	icerikGetir();
 }
-icerikGetir("SWF/anasayfa.swf");
-basla.enabled = false;
+icerikGetir();//ana sayfa 
+//basla.enabled = false;
+basla.addEventListener(MouseEvent.MOUSE_DOWN,function(){etkinIcerik().sesAc();});
+basla.addEventListener(MouseEvent.MOUSE_UP,function(){etkinIcerik().sesDurdur();});
 
-/////////////////////////////////////////////////
+/////////////////////////////////////////////////;
 /////////hizliMenu kodları///////////////////////
 /////////////////////////////////////////////////
-trace(hizliMenu.yukariAsagiButon.currentFrame);
 hizliMenu.yukariAsagiButon.addEventListener(MouseEvent.CLICK,menuAcKapat);
 /**
  * menuAcKapat fonksiyonu
@@ -114,55 +172,13 @@ function menuKapat():void
 	hizliMenu.yukariAsagiButon.gotoAndStop(1);
 }
 
-hizliMenu.vida.addEventListener(MouseEvent.CLICK,icerikGetir1);
-function icerikGetir1(e:MouseEvent)
-{
-	icerikGetir("SWF/1.swf");
-	baslaKapatMousesiz();
-	icerikNo = 1;
-}
-hizliMenu.cark.addEventListener(MouseEvent.CLICK,icerikGetir2);
-function icerikGetir2(e:MouseEvent)
-{
-	icerikGetir("SWF/2.swf");
-	baslaKapatMousesiz();
-	icerikNo = 2;
-}
-hizliMenu.cikrik.addEventListener(MouseEvent.CLICK,icerikGetir3);
-function icerikGetir3(e:MouseEvent)
-{
-	icerikGetir("SWF/3.swf");
-	baslaKapatMousesiz();
-	icerikNo = 3;
-}
-hizliMenu.tekerlek.addEventListener(MouseEvent.CLICK,icerikGetir4);
-function icerikGetir4(e:MouseEvent)
-{
-	icerikGetir("SWF/4.swf");
-	baslaKapatMousesiz();
-	icerikNo = 4;
-}
-hizliMenu.kaldirac.addEventListener(MouseEvent.CLICK,icerikGetir5);
-function icerikGetir5(e:MouseEvent)
-{
-	icerikGetir("SWF/5.swf");
-	baslaKapatMousesiz();
-	icerikNo = 5;
-}
-hizliMenu.egikduzlem.addEventListener(MouseEvent.CLICK,icerikGetir6);
-function icerikGetir6(e:MouseEvent)
-{
-	icerikGetir("SWF/6.swf");
-	baslaKapatMousesiz();
-	icerikNo = 6;
-}
-hizliMenu.makara.addEventListener(MouseEvent.CLICK,icerikGetir7);
-function icerikGetir7(e:MouseEvent)
-{
-	icerikGetir("SWF/7.swf");
-	baslaKapatMousesiz();
-	icerikNo = 7;
-}
+hizliMenu.vida.addEventListener(MouseEvent.CLICK,function(){icerikNo=1;icerikGetir();baslaKapatMousesiz();});
+hizliMenu.cark.addEventListener(MouseEvent.CLICK,function(){icerikNo=2;icerikGetir();baslaKapatMousesiz();});
+hizliMenu.cikrik.addEventListener(MouseEvent.CLICK,function(){icerikNo=3;icerikGetir();baslaKapatMousesiz();});
+hizliMenu.tekerlek.addEventListener(MouseEvent.CLICK,function(){icerikNo=4;icerikGetir();baslaKapatMousesiz();});
+hizliMenu.kaldirac.addEventListener(MouseEvent.CLICK,function(){icerikNo=5;icerikGetir();baslaKapatMousesiz();});
+hizliMenu.egikduzlem.addEventListener(MouseEvent.CLICK,function(){icerikNo=6;icerikGetir();baslaKapatMousesiz();});
+hizliMenu.makara.addEventListener(MouseEvent.CLICK,function(){icerikNo=7;icerikGetir();baslaKapatMousesiz();});
 /////////////////////////////////////////////////
 
 /////////////////////////////////////////////////
@@ -206,7 +222,7 @@ function yanMenuAcKapat(e:MouseEvent)
 function yanMenuAc():void
 {
 	yanMenu.x +=  5;
-	if (yanMenu.x>=100)
+	if (yanMenu.x >= 100)
 	{
 		clearInterval(menuAcZamanlayici);
 	}
@@ -220,56 +236,64 @@ function yanMenuAc():void
 function yanMenuKapat():void
 {
 	yanMenu.x -=  5;
-	if (yanMenu.x<=0)
+	if (yanMenu.x <= 0)
 	{
 		clearInterval(menuKapatZamanlayici);
 	}
 	yanMenu.acKapatButon.gotoAndStop(1);
 }
-/////////////////////////////////////////////////
+/////////////////////////////////////////////////;
 
-/////////////////////////////////////////////////
+/////////////////////////////////////////////////;
 //////////////Yan menü  Butonlar/////////////////
 /////////////////////////////////////////////////
 
 //anasayfa
-yanMenu.anaSayfa.addEventListener(MouseEvent.CLICK,anaSayfaButonFonksiyon);
-yanMenu.anaSayfa.addEventListener(MouseEvent.MOUSE_OVER,function(){yanMenu.anaSayfa.gotoAndStop(2)});
-yanMenu.anaSayfa.addEventListener(MouseEvent.MOUSE_OUT,function(){yanMenu.anaSayfa.gotoAndStop(1)});
-function anaSayfaButonFonksiyon (e:MouseEvent) {
-	icerikGetir("SWF/anasayfa.swf");
+yanMenu.anaSayfaButon.addEventListener(MouseEvent.CLICK,anaSayfaButonFonksiyon);
+yanMenu.anaSayfaButon.addEventListener(MouseEvent.MOUSE_OVER,function(){yanMenu.anaSayfaButon.gotoAndStop(2)});
+yanMenu.anaSayfaButon.addEventListener(MouseEvent.MOUSE_OUT,function(){yanMenu.anaSayfaButon.gotoAndStop(1)});
+function anaSayfaButonFonksiyon(e:MouseEvent)
+{
+	icerikNo=0;
+	icerikGetir();
 	menuKapatZamanlayici = setInterval(yanMenuKapat,1);
 }
 //oyun
 yanMenu.oyun.addEventListener(MouseEvent.CLICK,oyunButonFonksiyon);
 yanMenu.oyun.addEventListener(MouseEvent.MOUSE_OVER,function(){yanMenu.oyun.gotoAndStop(2)});
 yanMenu.oyun.addEventListener(MouseEvent.MOUSE_OUT,function(){yanMenu.oyun.gotoAndStop(1)});
-function oyunButonFonksiyon(e:MouseEvent) {
-	icerikGetir("SWF/oyun.swf");
+function oyunButonFonksiyon(e:MouseEvent)
+{
+	//icerikGetir("SWF/oyun.swf");
 	menuKapatZamanlayici = setInterval(yanMenuKapat,1);
 }
 //sozluk
 yanMenu.sozluk.addEventListener(MouseEvent.CLICK,sozlukButonFonksiyon);
 yanMenu.sozluk.addEventListener(MouseEvent.MOUSE_OVER,function(){yanMenu.sozluk.gotoAndStop(2)});
 yanMenu.sozluk.addEventListener(MouseEvent.MOUSE_OUT,function(){yanMenu.sozluk.gotoAndStop(1)});
-function sozlukButonFonksiyon(e:MouseEvent) {
-	icerikGetir("SWF/sozluk.swf");
+function sozlukButonFonksiyon(e:MouseEvent)
+{
+	icerikNo=11;
+	icerikGetir();
 	menuKapatZamanlayici = setInterval(yanMenuKapat,1);
 }
 //sinav
 yanMenu.sinav.addEventListener(MouseEvent.CLICK,sinavButonFonksiyon);
 yanMenu.sinav.addEventListener(MouseEvent.MOUSE_OVER,function(){yanMenu.sinav.gotoAndStop(2)});
 yanMenu.sinav.addEventListener(MouseEvent.MOUSE_OUT,function(){yanMenu.sinav.gotoAndStop(1)});
-function sinavButonFonksiyon(e:MouseEvent) {
-	icerikGetir("SWF/sinav.swf");
+function sinavButonFonksiyon(e:MouseEvent)
+{
+	//icerikGetir("SWF/sinav.swf");
 	menuKapatZamanlayici = setInterval(yanMenuKapat,1);
 }
 //konular
 yanMenu.konular.addEventListener(MouseEvent.CLICK,konularButonFonksiyon);
 yanMenu.konular.addEventListener(MouseEvent.MOUSE_OVER,function(){yanMenu.konular.gotoAndStop(2)});
 yanMenu.konular.addEventListener(MouseEvent.MOUSE_OUT,function(){yanMenu.konular.gotoAndStop(1)});
-function konularButonFonksiyon(e:MouseEvent) {
-	icerikGetir("SWF/konular.swf");
+function konularButonFonksiyon(e:MouseEvent)
+{
+	icerikNo=8;
+	icerikGetir();
 	menuKapatZamanlayici = setInterval(yanMenuKapat,1);
 }
 /////////////////////////////////////////////////
